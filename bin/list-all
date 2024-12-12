@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+GH_REPO="https://api.github.com/repos/tamasfe/taplo/releases"
+cmd="curl -s"
+if [ -n "${GITHUB_API_TOKEN:-}" ]; then
+  cmd="$cmd -H 'Authorization: token $GITHUB_API_TOKEN'"
+fi
+
+# Fetch all tag names, and get only second column. Then remove all unnecesary characters.
+versions=$(eval "$cmd $GH_REPO" | grep -oE "tag_name\": *\".{1,15}\"," | sed 's/tag_name\": *\"//;s/\",//' | sort -V | uniq)
+
+echo "$versions"
