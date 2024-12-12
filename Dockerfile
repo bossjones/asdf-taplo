@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y \
     zsh \
     vim \
     sudo \
+    bash-completion \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a non-root user
@@ -46,11 +47,11 @@ RUN . "$HOME/.asdf/asdf.sh" \
     && asdf install nodejs latest \
     && asdf global nodejs latest \
     && asdf plugin add python \
-    && asdf install python latest \
-    && asdf global python latest \
+    && asdf install python 3.12 \
+    && asdf global python 3.12 \
     && asdf plugin add rust \
-    && asdf install rust latest \
-    && asdf global rust latest
+    && asdf install rust 1.82.0 \
+    && asdf global rust 1.82.0
 
 # Set up a nice prompt
 RUN echo 'export PS1="\[\e[32m\]asdf-test\[\e[m\] \[\e[33m\]\w\[\e[m\] > "' >> ~/.bashrc
